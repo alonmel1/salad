@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/.idea/jsLinters/eslint.xml
+/src/lot-salas.json
+/.idea/modules.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/salad.iml
+/.idea/vcs.xml
+/.idea/workspace.xml
