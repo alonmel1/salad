@@ -1,13 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
 import PropTypes from 'prop-types';
 import {Button, Grid} from "@mui/material";
 import Lottie from 'react-lottie';
 import saladAnimation from '../../lot-salas.json'
 import * as Styled from './HomeStyle';
+import {initIngredients} from "../../slices/ingredientsSlice";
 
 const Home = props => {
-    let navigate = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        dispatch(initIngredients())
+    }, [])
 
     const commonDefaults = {
         loop: false,

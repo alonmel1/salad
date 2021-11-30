@@ -1,12 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from "react-redux";
-import {getIngredients} from "../../reducers/ingredientsSlice";
+import {getIngredients} from "../../slices/ingredientsSlice";
 import Table from "./components/Table/Table";
 import * as style from './IngredientStyle'
-import {Link} from "react-router-dom";
+import {Button} from "@mui/material";
+import CheckoutDialog from "./components/CheckoutDialog/CheckoutDialog";
 
 const Ingredients = props => {
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const dispatch = useDispatch();
     const {availableIngredients} = useSelector(state => state.ingredients);
     const {totalPrice} = useSelector(state => state.ingredients);
@@ -19,12 +21,16 @@ const Ingredients = props => {
         <style.IngredientContainer>
             <Table ingredients={availableIngredients} />
             <div>
-                <span>
+                <span className="total-price">
                     {`Total Price ${totalPrice.toFixed(2)}`}
                 </span>
-                <Link to="/summary">
-                    Proceed to checkout
-                </Link>
+                <Button variant="outlined" onClick={() => setIsDialogOpen(!isDialogOpen)}>
+                    Checkout
+                </Button>
+                <CheckoutDialog
+                    open={isDialogOpen}
+                    handleClose={() => setIsDialogOpen(false)}
+                />
             </div>
         </style.IngredientContainer>
     );

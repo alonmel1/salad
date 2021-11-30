@@ -9,13 +9,13 @@ const initialState = {
 export const getIngredients = createAsyncThunk(
     'ingredients/getIngredients',
     async (dispatch, getState) => {
-        return await fetch('__mocks__/ingredients.json').then(
-            (res) => res.json()
-        )
+        const response = await fetch('__mocks__/ingredients.json')
+
+        return response.json();
     }
 )
 
-const getTotalPrice = (availableIngredients) => availableIngredients.reduce((acc ,{price, quantity}) => {
+const getTotalPrice = (availableIngredients) => availableIngredients.reduce((acc, {price, quantity}) => {
     return acc + price * quantity;
 }, 0);
 
@@ -23,6 +23,11 @@ export const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState,
     reducers: {
+        initIngredients: (state) => {
+            state.availableIngredients = null
+            state.totalPrice = 0.00
+            state.loading = false
+        },
         addIngredient: (state, action) => {
             const ingredient = action.payload;
             const ingredientIndex = state.availableIngredients.findIndex(({name}) => name === ingredient)
@@ -40,25 +45,26 @@ export const ingredientsSlice = createSlice({
             }
         }
     },
-    extraReducers: (builder) => {
-        builder
-            .addCase(getIngredients.pending, (state, action) => {
-                state.loading = true
-            })
-            .addCase(getIngredients.fulfilled, (state, action) => {
-                state.loading = false
-                state.availableIngredients = action.payload.items.map(item => ({
-                    ...item,
-                    quantity: 0,
-                }))
-            })
-            .addCase(getIngredients.rejected, (state, action) => {
-                state.loading = false
-            })
-    }
+    extraReducers:
+        (builder) => {
+            builder
+                .addCase(getIngredients.pending, (state, action) => {
+                    state.loading = true
+                })
+                .addCase(getIngredients.fulfilled, (state, action) => {
+                    state.loading = false
+                    state.availableIngredients = action.payload.items.map(item => ({
+                        ...item,
+                        quantity: 0,
+                    }))
+                })
+                .addCase(getIngredients.rejected, (state, action) => {
+                    state.loading = false
+                })
+        }
 })
 
 // Action creators are generated for each case reducer function
-export const { addIngredient, removeIngredient } = ingredientsSlice.actions;
+export const {addIngredient, removeIngredient, initIngredients} = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer

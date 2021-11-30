@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import styled from '@emotion/styled'
 import PropTypes from 'prop-types';
 import {IconButton} from '@mui/material'
@@ -14,9 +14,11 @@ const HeaderContainer = styled.div`
 `
 
 const Header = props => {
+    const navigate = useNavigate();
+
     return (
         <HeaderContainer>
-            <IconButton color="primary" >
+            <IconButton color="primary" onClick={() => navigate('/')}>
                 <HomeIcon fontSize="large" />
             </IconButton>
         </HeaderContainer>

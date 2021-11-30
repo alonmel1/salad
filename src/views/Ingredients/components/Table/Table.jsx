@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import {IconButton} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import {addIngredient, removeIngredient} from "../../../../reducers/ingredientsSlice";
+import {addIngredient, removeIngredient} from "../../../../slices/ingredientsSlice";
 
 const operations = {
     ADD: 'ADD',
