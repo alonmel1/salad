@@ -1,13 +1,11 @@
-import {lazy, Suspense, useEffect} from "react";
+import {lazy, Suspense} from "react";
 import {
     BrowserRouter,
     Routes,
     Route
 } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import styled from '@emotion/styled'
 import Header from "./components/Header/Header";
-import {getIngredients} from "./reducers/ingredientsSlice";
 
 const Home = lazy(() => import('../src/views/Home/Home'));
 const Summary = lazy(() => import('./views/Summary/Summary'));
@@ -23,17 +21,10 @@ const ViewContent = styled.div`
   display: flex;
   flex: 1;
   padding: 15px;
+  overflow: auto;
 `
 
-const App = () => {
-    const dispatch = useDispatch();
-    const {availableIngridents} = useSelector(state => state.ingredients);
-
-    useEffect(() => {
-        dispatch(getIngredients())
-    }, []);
-
-    return (
+const App = () => (
         <Layout>
             <BrowserRouter>
                 <Suspense fallback={<div>Loading...</div>}>
@@ -49,6 +40,5 @@ const App = () => {
             </BrowserRouter>
         </Layout>
     )
-}
 
 export default App;
