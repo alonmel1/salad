@@ -44,20 +44,20 @@ const Table = ({ingredients = []}) => {
             </thead>
             <tbody>
             {
-                (ingredients || []).map(ingredient => (
-                    <tr key={ingredient.name}>
-                        <td>{ingredient.name}</td>
-                        <td>{ingredient.price}</td>
-                        <td>{ingredient.quantity}</td>
+                (ingredients || []).map(({name, quantity, price} ) => (
+                    <tr key={name}>
+                        <td>{name}</td>
+                        <td>{price}</td>
+                        <td>{quantity}</td>
                         <td>
-                            <IconButton data-action={`${ingredient.name}_${operations.ADD}`}>
+                            <IconButton data-action={`${name}_${operations.ADD}`}>
                                 <AddIcon/>
                             </IconButton>
-                            <IconButton data-action={`${ingredient.name}_${operations.REMOVE}`}>
+                            <IconButton data-action={`${name}_${operations.REMOVE}`}>
                                 <RemoveIcon/>
                             </IconButton>
                         </td>
-                        <td>{(ingredient.quantity * ingredient.price).toFixed(2)}</td>
+                        <td>{(quantity * price).toFixed(2)}</td>
                     </tr>
                 ))
             }

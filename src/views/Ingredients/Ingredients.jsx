@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {getIngredients} from "../../reducers/ingredientsSlice";
 import Table from "./components/Table/Table";
 import * as style from './IngredientStyle'
-import {Button} from "@mui/material";
 import {Link} from "react-router-dom";
 
 const Ingredients = props => {
@@ -13,7 +12,7 @@ const Ingredients = props => {
     const {totalPrice} = useSelector(state => state.ingredients);
 
     useEffect(() => {
-        dispatch(getIngredients())
+        !availableIngredients && dispatch(getIngredients())
     }, []);
 
     return (
